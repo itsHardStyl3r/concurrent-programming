@@ -13,7 +13,7 @@ namespace Data
         public Color Color { get; set; }
         public double Radius { get; set; }
 
-        public static IEntity CreateBall(int maxWidth, int maxHeight)
+        public static Ball CreateBall(int maxWidth, int maxHeight)
         {
             double radius = random.Next(20, 50);
             return new Ball
