@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.ViewModel
 {
-    class Class1
+    class MainViewModel
     {
     }
 }
