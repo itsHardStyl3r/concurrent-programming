@@ -2,7 +2,7 @@
 
 namespace Logic
 {
-    public class EntityLogic
+    public class EntityLogic : ILogic
     {
         public IEntity EntityData { get; set; }
 
@@ -30,7 +30,7 @@ namespace Logic
             return Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2));
         }
 
-        public bool HasCollided(EntityLogic other)
+        public bool HasCollided(ILogic other)
         {
             double dx = (EntityData.X + EntityData.Radius / 2) - (other.EntityData.X + other.EntityData.Radius / 2);
             double dy = (EntityData.Y + EntityData.Radius / 2) - (other.EntityData.Y + other.EntityData.Radius / 2);
@@ -39,7 +39,7 @@ namespace Logic
             return distance <= minDistance;
         }
 
-        public void ResolveCollision(EntityLogic other)
+        public void ResolveCollision(ILogic other)
         {
             double dx = (EntityData.X + EntityData.Radius / 2) - (other.EntityData.X + other.EntityData.Radius / 2);
             double dy = (EntityData.Y + EntityData.Radius / 2) - (other.EntityData.Y + other.EntityData.Radius / 2);
