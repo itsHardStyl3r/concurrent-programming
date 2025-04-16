@@ -2,9 +2,14 @@
 
 namespace Logic
 {
-    public class Logic
+    public class EntityLogic
     {
         public IEntity EntityData { get; set; }
+
+        public EntityLogic(int width, int height)
+        {
+            EntityData = Ball.CreateBall(width, height);
+        }
 
         public void Move(int maxWidth, int maxHeight)
         {
@@ -25,7 +30,7 @@ namespace Logic
             return Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2));
         }
 
-        public bool HasCollided(Logic other)
+        public bool HasCollided(EntityLogic other)
         {
             double dx = (EntityData.X + EntityData.Radius / 2) - (other.EntityData.X + other.EntityData.Radius / 2);
             double dy = (EntityData.Y + EntityData.Radius / 2) - (other.EntityData.Y + other.EntityData.Radius / 2);
@@ -34,7 +39,7 @@ namespace Logic
             return distance <= minDistance;
         }
 
-        public void ResolveCollision(Logic other)
+        public void ResolveCollision(EntityLogic other)
         {
             double dx = (EntityData.X + EntityData.Radius / 2) - (other.EntityData.X + other.EntityData.Radius / 2);
             double dy = (EntityData.Y + EntityData.Radius / 2) - (other.EntityData.Y + other.EntityData.Radius / 2);
