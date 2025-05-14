@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Presentation"
         xmlns:viewModel="clr-namespace:Presentation.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600">
+        Title="MainWindow" Height="600" Width="800">
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -31,8 +31,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Canvas>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <TextBlock Text="Balls count:" Margin="5"/>
+        <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Margin="5"
+                Background="#20000000">
+            <TextBlock Text="Ilość piłek:" Margin="5"/>
             <TextBox Width="50" Margin="5" Text="{Binding BallCount, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Content="Start" Command="{Binding StartCommand}" CommandParameter="{Binding ElementName=MainCanvas}" Margin="5"/>
         </StackPanel>
