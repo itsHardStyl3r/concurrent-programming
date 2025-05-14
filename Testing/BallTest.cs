@@ -1,31 +1,51 @@
 ﻿using Data;
 
-namespace Tesitng
+namespace BallTesting
 {
     [TestFixture]
     public class BallTest
     {
+        private const int Width = 500;
+        private const int Height = 500;
+
         [Test]
-        public void TestSetterAndGetter()
+        public void TestConstructor()
         {
-            IEntity ballData = new Ball();
-            double x = 20;
-            double y = 20;
+            int x = 20;
+            int y = 20;
             double rad = 20;
-            double movX = 8;
-            double movY = -4;
+            int movX = 8;
+            int movY = -4;
+            IEntity testBall = Ball.CreateBall(x, y, movX, movY, rad, 1);
 
-            ballData.X = x;
-            ballData.Y = y;
-            ballData.Radius = rad;
-            ballData.MovX = movX;
-            ballData.MovY = movY;
+            Assert.That(testBall.X == x);
+            Assert.That(testBall.Y == y);
+            Assert.That(testBall.Radius == testBall.Radius);
+            Assert.That(testBall.MovX == testBall.MovX);
+            Assert.That(testBall.MovY == testBall.MovY);
+        }
 
-            Assert.That(ballData.X, Is.EqualTo(x));
-            Assert.That(ballData.Y, Is.EqualTo(y));
-            Assert.That(rad, Is.EqualTo(ballData.Radius));
-            Assert.That(movX, Is.EqualTo(ballData.MovX));
-            Assert.That(movY, Is.EqualTo(ballData.MovY));
+        [Test]
+        public void TestWallBouncing()
+        {
+            double radius = 30;
+            double mass = 10;
+
+            var entity = Ball.CreateBall(0, 100, -5, 0, radius, mass);
+            entity.Move(Width, Height);
+            Assert.That(entity.MovX, Is.GreaterThan(0), "Nie odbija sie od lewej sciany.");
+
+            entity = Ball.CreateBall(Width - (int)radius, 100, 5, 0, radius, mass);
+            entity.Move(Width, Height);
+            Assert.That(entity.MovX, Is.LessThan(0), "Nie odbija sie od prawej sciany.");
+
+            entity = Ball.CreateBall(100, 0, 0, -5, radius, mass);
+            entity.Move(Width, Height);
+            Assert.That(entity  .MovY, Is.GreaterThan(0), "Nie odbija sie od gornej sciany.");
+
+            entity = Ball.CreateBall(100, Height - (int)radius, 0, 5, radius, mass);
+            entity.Move(Width, Height);
+            Assert.That(entity.MovY, Is.LessThan(0), "Nie odbija sie od dolnej sciany.");
         }
     }
 }

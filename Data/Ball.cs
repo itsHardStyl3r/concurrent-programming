@@ -53,10 +53,26 @@
             };
         }
 
+        public static IEntity CreateBall(int x, int y, int movX, int movY, double radius, double mass)
+        {
+            return new Ball
+            {
+                X = x,
+                Y = y,
+                Radius = radius,
+                MovX = movX,
+                MovY = movY,
+                Mass = mass
+            };
+        }
+
         public void Start(int maxWidth, int maxHeight)
         {
-            if (moveTask != null && !moveTask.IsCompleted) return;
-
+            if (moveTask != null && !moveTask.IsCompleted)
+            {
+                Console.WriteLine("XD XD");
+                return;
+            }
             cancellationTokenSource = new CancellationTokenSource();
             var token = cancellationTokenSource.Token;
 
