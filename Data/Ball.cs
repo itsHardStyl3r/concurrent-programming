@@ -33,10 +33,11 @@
         public double MovX { get; set; }
         public double MovY { get; set; }
         public double Radius { get; set; }
+        public double Mass { get; set; }
 
         public static IEntity CreateBall(int maxWidth, int maxHeight)
         {
-            double radius = random.Next(20, 50);
+            double radius = random.Next(20, 60);
             return new Ball
             {
                 Radius = radius,
@@ -44,6 +45,7 @@
                 Y = random.Next(12, maxHeight - (int)radius),
                 MovX = random.Next(2, 5) * (random.Next(2) == 0 ? 1 : -1),
                 MovY = random.Next(2, 5) * (random.Next(2) == 0 ? 1 : -1),
+                Mass = radius * 0.8
             };
         }
 
@@ -53,10 +55,28 @@
             {
                 X += MovX;
                 Y += MovY;
-                if (X <= 0 || X + Radius >= maxWidth)
+
+                if (X <= 0)
+                {
+                    X = 0;
                     MovX = -MovX;
-                if (Y <= 0 || Y + Radius >= maxHeight)
+                }
+                else if (X + Radius >= maxWidth)
+                {
+                    X = maxWidth - Radius;
+                    MovX = -MovX;
+                }
+
+                if (Y <= 0)
+                {
+                    Y = 0;
                     MovY = -MovY;
+                }
+                else if (Y + Radius >= maxHeight)
+                {
+                    Y = maxHeight - Radius;
+                    MovY = -MovY;
+                }
             }
         }
     }

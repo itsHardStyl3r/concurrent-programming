@@ -16,39 +16,57 @@ namespace Logic
             EntityData = entityData;
         }
 
-        private double CalculateDistance(double dx, double dy)
-        {
-            return Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2));
-        }
-
         public bool HasCollided(ILogic other)
         {
-            double dx = (EntityData.X + EntityData.Radius / 2) - (other.EntityData.X + other.EntityData.Radius / 2);
-            double dy = (EntityData.Y + EntityData.Radius / 2) - (other.EntityData.Y + other.EntityData.Radius / 2);
-            double distance = CalculateDistance(dx, dy);
-            double minDistance = (EntityData.Radius / 2 + other.EntityData.Radius / 2) * 1.1;
-            return distance <= minDistance;
+            double dx = EntityData.X - other.EntityData.X;
+            double dy = EntityData.Y - other.EntityData.Y;
+            double distanceSq = dx * dx + dy * dy;
+            double radiusSum = (EntityData.Radius + other.EntityData.Radius) / 2;
+            double minDistanceSq= (radiusSum * 1.2) * (radiusSum * 1.1);
+
+            return distanceSq <= minDistanceSq;
         }
 
         public void ResolveCollision(ILogic other)
         {
-            double dx = (EntityData.X + EntityData.Radius / 2) - (other.EntityData.X + other.EntityData.Radius / 2);
-            double dy = (EntityData.Y + EntityData.Radius / 2) - (other.EntityData.Y + other.EntityData.Radius / 2);
-            double distance = CalculateDistance(dx, dy);
+            double x1 = EntityData.X;
+            double y1 = EntityData.Y;
+            double x2 = other.EntityData.X;
+            double y2 = other.EntityData.Y;
+            double m1 = EntityData.Mass;
 
-            double minDistance = (EntityData.Radius / 2 + other.EntityData.Radius / 2) * 1.1;
-            if (distance < minDistance)
-            {
-                double overlap = minDistance - distance;
-                double knockX = dx / distance * (overlap / 2);
-                double knockY = dy / distance * (overlap / 2);
+            double vx1 = EntityData.MovX;
+            double vy1 = EntityData.MovY;
+            double vx2 = other.EntityData.MovX;
+            double vy2 = other.EntityData.MovY;
+            double m2 = other.EntityData.Mass;
 
-                EntityData.X += knockX;
-                EntityData.Y += knockY;
-                other.EntityData.X -= knockX;
-                other.EntityData.Y -= knockY;
-            }
-            (EntityData.MovX, EntityData.MovY) = (other.EntityData.MovX, other.EntityData.MovY);
+            double dx = x1 - x2;
+            double dy = y1 - y2;
+
+            double distance = Math.Sqrt(dx * dx + dy * dy);
+            if (distance == 0) return;
+
+            double nx = dx / distance;
+            double ny = dy / distance;
+
+            double dvx = vx1 - vx2;
+            double dvy = vy1 - vy2;
+
+            double velocityAlongNormal = dvx * nx + dvy * ny;
+            if (velocityAlongNormal > 0) return;
+
+            double impulse = -2 * velocityAlongNormal;
+            impulse /= (1 / m1 + 1 / m2);
+
+            double impulseX = impulse * nx;
+            double impulseY = impulse * ny;
+
+            EntityData.MovX += impulseX / m1;
+            EntityData.MovY += impulseY / m1;
+            other.EntityData.MovX -= impulseX / m2;
+            other.EntityData.MovY -= impulseY / m2;
         }
+
     }
 }

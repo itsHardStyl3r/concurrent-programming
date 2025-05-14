@@ -7,6 +7,7 @@
         double MovX { get; set; }
         double MovY { get; set; }
         double Radius { get; set; }
+        double Mass { get; set; }
         void Move(int maxWidth, int maxHeight);
     }
 }
