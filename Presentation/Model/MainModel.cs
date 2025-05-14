@@ -14,6 +14,7 @@ namespace Presentation.Model
         private int height;
         private Dispatcher dispatcher;
         private CancellationTokenSource simulationTokenSource;
+        private readonly object _syncLock = new();
 
         public MainModel(Dispatcher dispatcher)
         {
@@ -61,10 +62,13 @@ namespace Presentation.Model
 
         private void CheckCollisions()
         {
-            for (int i = 0; i < ballLogics.Count; i++)
-                for (int j = i + 1; j < ballLogics.Count; j++)
-                    if (ballLogics[i].HasCollided(ballLogics[j]))
-                        ballLogics[i].ResolveCollision(ballLogics[j]);
+            lock (_syncLock)
+            {
+                for (int i = 0; i < ballLogics.Count; i++)
+                    for (int j = i + 1; j < ballLogics.Count; j++)
+                        if (ballLogics[i].HasCollided(ballLogics[j]))
+                            ballLogics[i].ResolveCollision(ballLogics[j]);
+            }
         }
     }
 }
