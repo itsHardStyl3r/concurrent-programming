@@ -16,13 +16,9 @@ namespace Logic
             EntityData.X += EntityData.MovX;
             EntityData.Y += EntityData.MovY;
             if (EntityData.X <= 0 || EntityData.X + EntityData.Radius >= maxWidth)
-            {
                 EntityData.MovX = -EntityData.MovX;
-            }
             if (EntityData.Y <= 0 || EntityData.Y + EntityData.Radius >= maxHeight)
-            {
                 EntityData.MovY = -EntityData.MovY;
-            }
         }
 
         private double CalculateDistance(double dx, double dy)

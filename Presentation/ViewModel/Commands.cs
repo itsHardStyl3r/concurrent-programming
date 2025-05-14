@@ -5,7 +5,6 @@ namespace Presentation.Commands
     public class Command : ICommand
     {
         private Action<object> exec;
-
         public event EventHandler CanExecuteChanged { add { } remove { } }
 
         public Command(Action<object> execute)

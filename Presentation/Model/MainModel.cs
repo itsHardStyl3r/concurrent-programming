@@ -27,7 +27,6 @@ namespace Presentation.Model
             this.height = height;
             SpawnBalls(ballCount);
             moveTimer.Start();
-
         }
 
         public void StopSimulation()
@@ -53,23 +52,15 @@ namespace Presentation.Model
                 ball.Logic.Move(width, height);
                 ball.Update();
             }
-
             CheckCollisions();
         }
 
         private void CheckCollisions()
         {
             for (int i = 0; i < balls.Count; i++)
-            {
                 for (int j = i + 1; j < balls.Count; j++)
-                {
                     if (balls[i].Logic.HasCollided(balls[j].Logic))
-                    {
                         balls[i].Logic.ResolveCollision(balls[j].Logic);
-                    }
-                }
-            }
         }
-
     }
 }

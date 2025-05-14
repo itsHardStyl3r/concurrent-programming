@@ -7,7 +7,6 @@ namespace Prezentacja.ViewModel
     public class EntityViewModel : INotifyPropertyChanged
     {
         private EntityLogic ball;
-
         public double X => ball.EntityData.X;
         public double Y => ball.EntityData.Y;
         public double Radius => ball.EntityData.Radius;
@@ -24,7 +23,6 @@ namespace Prezentacja.ViewModel
         }
 
         public EntityLogic Logic => ball;
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

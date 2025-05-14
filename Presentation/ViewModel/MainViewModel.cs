@@ -13,7 +13,6 @@ namespace Presentation.ViewModel
     {
         private MainModel model;
         private int ballCount;
-
         public int BallCount
         {
             get { return ballCount; }
@@ -38,9 +37,7 @@ namespace Presentation.ViewModel
         private void StartSimulation(object parameter)
         {
             if (parameter is FrameworkElement element)
-            {
                 model.StartSimulation(ballCount, (int)element.ActualWidth, (int)element.ActualHeight);
-            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
