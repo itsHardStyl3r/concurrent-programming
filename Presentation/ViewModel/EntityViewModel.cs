@@ -3,30 +3,50 @@ using System.Runtime.CompilerServices;
 using System.Windows.Media;
 using Logic;
 
-namespace Prezentacja.ViewModel
+namespace Presentation.ViewModel
 {
     public class EntityViewModel : INotifyPropertyChanged
     {
-        private EntityLogic ball;
+        private double _x;
+        private double _y;
+        private double _radius;
         private Random random = new Random();
-        public double X => ball.EntityData.X;
-        public double Y => ball.EntityData.Y;
-        public double Radius => ball.EntityData.Radius;
+
+        public double X
+        {
+            get => _x;
+            set { _x = value; OnPropertyChanged(); }
+        }
+
+        public double Y
+        {
+            get => _y;
+            set { _y = value; OnPropertyChanged(); }
+        }
+
+        public double Radius
+        {
+            get => _radius;
+            set { _radius = value; OnPropertyChanged(); }
+        }
+
         public Brush BallColor => new SolidColorBrush(Color.FromArgb(255,
                 (byte)random.Next(0, 230), (byte)random.Next(0, 230), (byte)random.Next(0, 230)));
 
-        public EntityViewModel(EntityLogic ball)
+        public EntityViewModel(ILogic logic)
         {
-            this.ball = ball;
+            if (logic == null) return;
+            X = logic.EntityData.X;
+            Y = logic.EntityData.Y;
+            Radius = logic.EntityData.Radius;
         }
 
-        public void Update()
+        public void Update(double x, double y)
         {
-            OnPropertyChanged(nameof(X));
-            OnPropertyChanged(nameof(Y));
+            X = x;
+            Y = y;
         }
 
-        public EntityLogic Logic => ball;
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

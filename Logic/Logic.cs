@@ -16,6 +16,16 @@ namespace Logic
             EntityData = entityData;
         }
 
+        public void Start(int maxWidth, int maxHeight)
+        {
+            EntityData.Start(maxWidth, maxHeight);
+        }
+
+        public void Stop()
+        {
+            EntityData.Stop();
+        }
+
         public bool HasCollided(ILogic other)
         {
             double dx = EntityData.X - other.EntityData.X;

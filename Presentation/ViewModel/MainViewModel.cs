@@ -5,14 +5,14 @@ using System.Windows.Input;
 using Presentation.Model;
 using System.Windows;
 using Presentation.Commands;
-using Prezentacja.ViewModel;
+using System.Windows.Threading;
 
 namespace Presentation.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private MainModel model;
-        private int ballCount;
+        private int ballCount = 10;
         public int BallCount
         {
             get { return ballCount; }
@@ -29,8 +29,7 @@ namespace Presentation.ViewModel
 
         public MainViewModel()
         {
-            model = new MainModel();
-            ballCount = 10;
+            model = new MainModel(Dispatcher.CurrentDispatcher);
             StartCommand = new Command(StartSimulation);
         }
 

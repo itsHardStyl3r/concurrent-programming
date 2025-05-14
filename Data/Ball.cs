@@ -7,6 +7,10 @@
         private double _x;
         private double _y;
 
+        private CancellationTokenSource cancellationTokenSource;
+        private Task moveTask;
+        public event Action<double, double> EntityChanged;
+
         public double X
         {
             get
@@ -49,6 +53,57 @@
             };
         }
 
+        public void Start(int maxWidth, int maxHeight)
+        {
+            if (moveTask != null && !moveTask.IsCompleted) return;
+
+            cancellationTokenSource = new CancellationTokenSource();
+            var token = cancellationTokenSource.Token;
+
+            moveTask = Task.Run(async () =>
+            {
+                try
+                {
+                    while (!token.IsCancellationRequested)
+                    {
+                        Move(maxWidth, maxHeight);
+                        await Task.Delay(20, token);
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                }
+            }, token);
+        }
+
+
+        public void Stop()
+        {
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+
+                try
+                {
+                    moveTask?.Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    if (ex.InnerExceptions.All(e => e is TaskCanceledException))
+                    {
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                cancellationTokenSource.Dispose();
+                cancellationTokenSource = null;
+                moveTask = null;
+            }
+        }
+
         public void Move(int maxWidth, int maxHeight)
         {
             lock (_syncLock)
@@ -78,6 +133,7 @@
                     MovY = -MovY;
                 }
             }
+            EntityChanged?.Invoke(X, Y);
         }
     }
 }
