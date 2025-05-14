@@ -49,7 +49,7 @@ namespace Presentation.Model
         {
             foreach (var ball in balls)
             {
-                ball.Logic.Move(width, height);
+                ball.Logic.EntityData.Move(width, height);
                 ball.Update();
             }
             CheckCollisions();
