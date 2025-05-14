@@ -18,7 +18,7 @@ namespace Presentation.ViewModel
             get { return ballCount; }
             set
             {
-                ballCount = value;
+                ballCount = (value > 100 ? 100 : value);
                 OnPropertyChanged();
             }
         }
