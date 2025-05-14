@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using Data;
 using Logic;
 using Prezentacja.ViewModel;
 
@@ -41,7 +40,6 @@ namespace Presentation.Model
         {
             for (int i = 0; i < count; i++)
             {
-                Ball data = Ball.CreateBall(width, height);
                 var logic = new EntityLogic(width, height);
                 var ballVM = new EntityViewModel(logic);
                 balls.Add(ballVM);
