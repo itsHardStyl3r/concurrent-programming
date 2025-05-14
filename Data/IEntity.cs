@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Data
+﻿namespace Data
 {
     public interface IEntity
     {
@@ -9,6 +7,5 @@ namespace Data
         double MovX { get; set; }
         double MovY { get; set; }
         double Radius { get; set; }
-        Color Color { get; set; }
     }
 }

@@ -26,7 +26,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Ellipse Width="{Binding Radius}" Height="{Binding Radius}" Fill="Blue" />
+                        <Ellipse Width="{Binding Radius}" Height="{Binding Radius}" Fill="{Binding BallColor}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
