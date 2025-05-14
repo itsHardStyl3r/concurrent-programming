@@ -11,6 +11,11 @@ namespace Logic
             EntityData = Ball.CreateBall(width, height);
         }
 
+        public EntityLogic(IEntity entityData)
+        {
+            EntityData = entityData;
+        }
+
         public void Move(int maxWidth, int maxHeight)
         {
             EntityData.X += EntityData.MovX;
