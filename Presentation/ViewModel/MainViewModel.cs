@@ -26,17 +26,24 @@ namespace Presentation.ViewModel
         public ObservableCollection<EntityViewModel> AllBalls => model.Entities;
 
         public ICommand StartCommand { get; }
+        public ICommand BreakBall { get; }
 
         public MainViewModel()
         {
             model = new MainModel(Dispatcher.CurrentDispatcher);
             StartCommand = new Command(StartSimulation);
+            BreakBall = new Command(PerformBreakBall);
         }
 
         private void StartSimulation(object parameter)
         {
             if (parameter is FrameworkElement element)
                 model.StartSimulation(ballCount, (int)element.ActualWidth, (int)element.ActualHeight);
+        }
+
+        public void PerformBreakBall(object parameter)
+        {
+            model.BreakBall();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

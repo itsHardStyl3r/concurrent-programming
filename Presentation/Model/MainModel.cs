@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Threading;
 using Data;
 using Logic;
@@ -38,7 +39,16 @@ namespace Presentation.Model
 
             Log.Instance.StartTask();
             Log.Instance.LogMessage("Simulation " + width + "x" + height + " started with " + ballCount + " balls.");
+        }
 
+        public void BreakBall()
+        {
+            if (balls.Count == 0) return;
+            Debug.Print("Breaking last ball...");
+            int lastBall = ballLogics.Count;
+            ballLogics[lastBall - 1].Stop();
+            ballLogics.RemoveAt(lastBall - 1);
+            balls.RemoveAt(lastBall - 1);
         }
 
         public void StopSimulation()

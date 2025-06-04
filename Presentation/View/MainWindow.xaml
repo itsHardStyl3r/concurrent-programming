@@ -39,6 +39,7 @@
             <TextBlock Text="Ilość piłek:" Margin="5"/>
             <TextBox Width="50" Margin="5" Text="{Binding BallCount, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Content="Start" Command="{Binding StartCommand}" CommandParameter="{Binding ElementName=MainCanvas}" Margin="5"/>
+            <Button Content="BreakBall" Command="{Binding BreakBall}" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>
