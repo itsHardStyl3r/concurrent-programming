@@ -18,10 +18,15 @@ namespace Presentation.Model
         private CancellationTokenSource simulationTokenSource;
         private readonly object _syncLock = new();
 
+        private DispatcherTimer diagTimer;
+
         public MainModel(Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
             balls = new ObservableCollection<EntityViewModel>();
+
+            diagTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+            diagTimer.Tick += DiagnosticLog;
         }
 
         public void StartSimulation(int ballCount, int width, int height)
@@ -39,6 +44,9 @@ namespace Presentation.Model
 
             Log.Instance.StartTask();
             Log.Instance.LogMessage("Simulation " + width + "x" + height + " started with " + ballCount + " balls.");
+
+            diagTimer.Start();
+            Log.Instance.LogMessage("-- Diag timer started");
         }
 
         public void BreakBall()
@@ -58,6 +66,7 @@ namespace Presentation.Model
             balls.Clear();
             ballLogics.Clear();
             Log.Instance.StopTask();
+            diagTimer.Stop();
         }
 
         private void SpawnBalls(int count)
@@ -84,6 +93,18 @@ namespace Presentation.Model
                     for (int j = i + 1; j < ballLogics.Count; j++)
                         if (ballLogics[i].HasCollided(ballLogics[j]))
                             ballLogics[i].ResolveCollision(ballLogics[j]);
+            }
+        }
+
+        private void DiagnosticLog(object sender, EventArgs e)
+        {
+            lock (_syncLock)
+            {
+                for (int i = 0; i < ballLogics.Count; i++)
+                {
+                    var logic = ballLogics[i];
+                    Log.Instance.LogMessage($"Ball {i}: Position=({logic.EntityData.X}, {logic.EntityData.Y}), Velocity=({logic.EntityData.MovX}, {logic.EntityData.MovY}), Radius={logic.EntityData.Radius}");
+                }
             }
         }
     }
