@@ -68,11 +68,7 @@
 
         public void Start(int maxWidth, int maxHeight)
         {
-            if (moveTask != null && !moveTask.IsCompleted)
-            {
-                Console.WriteLine("XD XD");
-                return;
-            }
+            if (moveTask != null && !moveTask.IsCompleted) return;
             cancellationTokenSource = new CancellationTokenSource();
             var token = cancellationTokenSource.Token;
 
