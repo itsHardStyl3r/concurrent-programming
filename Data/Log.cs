@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace Data
 {
@@ -32,6 +33,7 @@ namespace Data
             if (loggingTask != null && !loggingTask.IsCompleted) StopTask();
 
             string logFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"balls_{DateTime.Now:ddMMyy_HHmmss}.log");
+            Debug.WriteLine($"Logging to {logFile}!");
 
             cancellationTokenSource = new CancellationTokenSource();
             var token = cancellationTokenSource.Token;

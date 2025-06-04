@@ -42,7 +42,7 @@
         public static IEntity CreateBall(int maxWidth, int maxHeight)
         {
             double radius = random.Next(20, 60);
-            return new Ball
+            IEntity ball = new Ball
             {
                 Radius = radius,
                 X = random.Next(12, maxWidth - (int)radius),
@@ -51,11 +51,13 @@
                 MovY = random.Next(2, 5) * (random.Next(2) == 0 ? 1 : -1),
                 Mass = radius * 0.8
             };
+            Log.Instance.LogMessage("Ball created @ (" + ball.X + ", " + ball.Y + ") with radius " + radius + ", mass " + (radius*0.8));
+            return ball;
         }
 
         public static IEntity CreateBall(int x, int y, int movX, int movY, double radius, double mass)
         {
-            return new Ball
+            IEntity ball = new Ball
             {
                 X = x,
                 Y = y,
@@ -64,6 +66,8 @@
                 MovY = movY,
                 Mass = mass
             };
+            Log.Instance.LogMessage("Ball created @ (" + ball.X + ", " + ball.Y + ") with radius " + radius + ", mass " + (radius * 0.8));
+            return ball;
         }
 
         public void Start(int maxWidth, int maxHeight)

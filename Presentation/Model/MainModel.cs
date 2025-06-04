@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using Data;
 using Logic;
 using Presentation.ViewModel;
 
@@ -34,6 +35,10 @@ namespace Presentation.Model
             var token = simulationTokenSource.Token;
 
             foreach (var logic in ballLogics) logic.Start(width, height);
+
+            Log.Instance.StartTask();
+            Log.Instance.LogMessage("Simulation " + width + "x" + height + " started with " + ballCount + " balls.");
+
         }
 
         public void StopSimulation()
@@ -42,6 +47,7 @@ namespace Presentation.Model
             foreach (var logic in ballLogics) logic.Stop();
             balls.Clear();
             ballLogics.Clear();
+            Log.Instance.StopTask();
         }
 
         private void SpawnBalls(int count)

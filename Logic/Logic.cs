@@ -34,7 +34,15 @@ namespace Logic
             double radiusSum = (EntityData.Radius + other.EntityData.Radius) / 2;
             double minDistanceSq= (radiusSum * 1.2) * (radiusSum * 1.1);
 
-            return distanceSq <= minDistanceSq;
+            if(distanceSq <= minDistanceSq)
+            {
+                Log.Instance.LogMessage("Collision detected @ (" + EntityData.X + "," + EntityData.Y + ") and (" + other.EntityData.X + "," + other.EntityData.Y + ")");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void ResolveCollision(ILogic other)
